@@ -150,18 +150,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           Flexible(
             child: TabBarView(
               controller: _controller,
-              children: <Widget>[
-                SingleChildScrollView(
-                                  child: Container(
-                                    height: 5000,
-                                    child: Column(
+              children: <Widget>[ Column(
                     children: [
                       SecondNav(),
                       GridHandler(),
                     ],
                   ),
-                                  ),
-                ),
                 Icon(Icons.star_border),
                 Icon(Icons.stop),
                 Icon(Icons.sms),

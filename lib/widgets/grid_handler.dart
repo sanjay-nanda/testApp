@@ -12,6 +12,7 @@ class _GridHandlerState extends State<GridHandler> {
   Widget build(BuildContext context) {
     return Flexible(
           child: GridView(
+            physics: ScrollPhysics(),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
