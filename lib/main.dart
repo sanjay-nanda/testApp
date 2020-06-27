@@ -34,6 +34,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int _prevControllerIndex = 0;
   double _aniValue = 0.0;
   double _prevAniValue = 0.0;
+  int _selectedIndex = 0;
 
   // these will be our tab icons. You can use whatever you like for the content of your buttons
   List _text = ['Tab 1', 'Tab 2', 'Tab 3', 'Tab 4', 'Tab 5', 'Tab 6'];
@@ -150,12 +151,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           Flexible(
             child: TabBarView(
               controller: _controller,
-              children: <Widget>[ Column(
-                    children: [
-                      SecondNav(),
-                      GridHandler(),
-                    ],
-                  ),
+              children: <Widget>[
+                Column(
+                  children: [
+                    SecondNav(),
+                    GridHandler(),
+                  ],
+                ),
                 Icon(Icons.star_border),
                 Icon(Icons.stop),
                 Icon(Icons.sms),
@@ -166,7 +168,25 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           ),
         ],
       ),
+      bottomNavigationBar:
+          BottomNavigationBar(
+            selectedItemColor: Colors.amber,
+            items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), title: Text('Menu')),
+        BottomNavigationBarItem(icon: Icon(Icons.person_outline), title: Text('Account')),
+        BottomNavigationBarItem(icon: Icon(Icons.add_shopping_cart), title: Text('Cart'))
+      ],
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      ),
     );
+  }
+
+  void _onItemTapped(int index)
+  {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   _handleTabAnimation() {

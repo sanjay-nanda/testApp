@@ -3,7 +3,7 @@ class Meal {
   final String title;
   final String imageUrl;
   final double rating;
-  final double noRatings;
+  final int noRatings;
   final double price;
   final bool isGlutenFree;
   final double weight;  
