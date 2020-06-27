@@ -1,4 +1,7 @@
-class Meal {
+import 'package:flutter/foundation.dart';
+
+
+class Meal with ChangeNotifier {
   final String id;
   final String title;
   final String imageUrl;
@@ -7,8 +10,9 @@ class Meal {
   final double price;
   final bool isGlutenFree;
   final double weight;  
+  bool inCart;
 
-const Meal({
+ Meal({
   this.id,
   this.imageUrl,
   this.isGlutenFree,
@@ -16,6 +20,19 @@ const Meal({
   this.price,
   this.rating,
   this.title,
-  this.weight
+  this.weight,
+  this.inCart
 });
+
+void addInCart(){
+  inCart = true;
+  notifyListeners();
 }
+
+void removeFromCart(){
+ inCart = false;
+ notifyListeners(); 
+}
+
+}
+

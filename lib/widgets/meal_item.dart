@@ -1,28 +1,12 @@
 import 'package:flutter/material.dart';
-import '../models/meal.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
+import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageUrl;
-  final double rating;
-  final int noRatings;
-  final double price;
-  final bool isGlutenFree;
-  final double weight;
-
-  const MealItem(
-      {@required this.id,
-      @required this.title,
-      @required this.imageUrl,
-      @required this.rating,
-      @required this.noRatings,
-      @required this.weight,
-      @required this.price,
-      @required this.isGlutenFree});
   @override
   Widget build(BuildContext context) {
+    final meal = Provider.of<Meal>(context, listen: false);
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 15),
       elevation: 0,
@@ -33,7 +17,7 @@ class MealItem extends StatelessWidget {
               Radius.circular(15),
             ),
             child: Image.network(
-              imageUrl,
+              meal.imageUrl,
               height: 150,
               width: 200,
               fit: BoxFit.cover,
@@ -42,7 +26,7 @@ class MealItem extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 26),
             child: Text(
-              title,
+              meal.title,
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -50,11 +34,11 @@ class MealItem extends StatelessWidget {
               ),
             ),
           ),
-          isGlutenFree
+          meal.isGlutenFree
               ? Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 5,right: 76),
+                      padding: const EdgeInsets.only(top: 5, right: 76),
                       child: Text(
                         'GLUTEN-FREE',
                         style: TextStyle(
@@ -69,7 +53,7 @@ class MealItem extends StatelessWidget {
                           child: RatingBar(
                             itemSize: 20,
                             onRatingUpdate: null,
-                            initialRating: rating,
+                            initialRating: meal.rating,
                             minRating: 0,
                             direction: Axis.horizontal,
                             itemCount: 5,
@@ -83,11 +67,11 @@ class MealItem extends StatelessWidget {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 6, left: 15),
-                          child: Text('(${noRatings.toString()})'),
+                          child: Text('(${meal.noRatings.toString()})'),
                         ),
                       ],
                     ),
-                   /*  Row(
+                    /*  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Padding(
@@ -119,7 +103,7 @@ class MealItem extends StatelessWidget {
                       child: RatingBar(
                         itemSize: 20,
                         onRatingUpdate: null,
-                        initialRating: rating,
+                        initialRating: meal.rating,
                         minRating: 0,
                         direction: Axis.horizontal,
                         itemCount: 5,
@@ -133,34 +117,33 @@ class MealItem extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 6, left: 15),
-                      child: Text('(${noRatings.toString()})'),
+                      child: Text('(${meal.noRatings.toString()})'),
                     ),
                   ],
                 ),
-              
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 0.0),
-                          child: Text(
-                            '\$ $price',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 0.0),
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.add_box,
-                                color: Colors.amber,
-                                size: 29,
-                              ),
-                              onPressed: () {}),
-                        )
-                      ],
-                    )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 0.0),
+                child: Text(
+                  '\$ ${meal.price}',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 0.0),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.add_box,
+                    color: Colors.amber,
+                    size: 29,
+                  ),
+                  onPressed: (){meal.addInCart();},
+                ),
+              )
+            ],
+          )
         ],
       ),
     );

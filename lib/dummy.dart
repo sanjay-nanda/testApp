@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'models/meal.dart';
 
-const DUMMY_MEALS = const [
+ List<Meal> DUMMY_MEALS =  [
   Meal(
     id: 'm1',
     title: 'Vegetables and Poached Egg',

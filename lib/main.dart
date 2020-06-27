@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:testApp/models/meal.dart';
+import 'package:testApp/second_screen.dart';
+import 'package:testApp/widgets/meal_items.dart';
 import './widgets/grid_handler.dart';
 import 'second_tab.dart';
 
@@ -7,12 +11,15 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (ctx) => Meals(),
+          child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(),
       ),
-      home: MyHomePage(),
     );
   }
 }
@@ -35,6 +42,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   double _aniValue = 0.0;
   double _prevAniValue = 0.0;
   int _selectedIndex = 0;
+
+  final List<Meal> _cartItems = [];
 
   // these will be our tab icons. You can use whatever you like for the content of your buttons
   List _text = ['Tab 1', 'Tab 2', 'Tab 3', 'Tab 4', 'Tab 5', 'Tab 6'];
@@ -158,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     GridHandler(),
                   ],
                 ),
-                Icon(Icons.star_border),
+                SecondScreen(),
                 Icon(Icons.stop),
                 Icon(Icons.sms),
                 Icon(Icons.smartphone),
@@ -174,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), title: Text('Menu')),
         BottomNavigationBarItem(icon: Icon(Icons.person_outline), title: Text('Account')),
-        BottomNavigationBarItem(icon: Icon(Icons.add_shopping_cart), title: Text('Cart'))
+        BottomNavigationBarItem(icon: Icon(Icons.add_shopping_cart), title: Text('Cart') )
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,

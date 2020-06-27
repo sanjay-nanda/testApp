@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../dummy.dart';
 import '../widgets/meal_item.dart';
+import './meal_items.dart';
 
 class GridHandler extends StatefulWidget {
   @override
@@ -10,8 +12,10 @@ class GridHandler extends StatefulWidget {
 class _GridHandlerState extends State<GridHandler> {
   @override
   Widget build(BuildContext context) {
+    final mealsData = Provider.of<Meals>(context);
+    final meals = mealsData.items;
     return Flexible(
-          child: GridView(
+          child: GridView.builder(
             physics: ScrollPhysics(),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
@@ -20,18 +24,11 @@ class _GridHandlerState extends State<GridHandler> {
           childAspectRatio: 1.4 / 2, 
         ),
         padding: EdgeInsets.all(10),
-        children: DUMMY_MEALS
-            .map((e) => MealItem(
-                  id: e.id,
-                  weight: e.weight,
-                  title: e.title,
-                  isGlutenFree: e.isGlutenFree,
-                  rating: e.rating,
-                  imageUrl: e.imageUrl,
-                  price: e.price,
-                  noRatings: e.noRatings,
-                ))
-            .toList(),
+        itemBuilder: (context, index) => ChangeNotifierProvider.value(
+          value: meals[index],
+          child: MealItem(),
+        ),
+        itemCount: meals.length,
       ),
     );
   }
